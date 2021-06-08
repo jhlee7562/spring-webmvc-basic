@@ -43,7 +43,7 @@ public class FileUtils {
 
         //중복없는 파일명으로 변환
         //dog.jpg -> 4354353425fjpoejpaeajpoaej9jf9e=a=0eawi-qh-iqhg_dog.jpg
-        String newFileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+        String newFileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
         //저장 경로에 날짜별 폴더를 생성
         //ex) D:/developing/upload/2021/06/07
@@ -77,10 +77,11 @@ public class FileUtils {
         if (getMediaType(ext) != null) {
             //이미지인경우
             String thumbnailPath = makeThumbnail(newUploadPath, newFileName);
-            return thumbnailPath.substring(uploadPath.length());
+            return thumbnailPath.substring(uploadPath.length())
+                    .replace("\\", "/");
         } else {
             //이미지가 아닌경우
-             return resposeFileName;
+             return resposeFileName.replace("\\", "/");
         }
     }
 
@@ -107,7 +108,7 @@ public class FileUtils {
     }
 
     //파일에서 확장자를 추출해주는 메서드
-    private static String getFileExtension(String fileName) {
+    public static String getFileExtension(String fileName) {
         //ex) fileName : 4354353425fjpoejpaeajpoaej9jf9e=a=0eawi-qh-iqhg_dog.jpg
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
